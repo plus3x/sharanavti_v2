@@ -1,27 +1,27 @@
-<div class="header">
-  <%= render 'vk_like' %>
-	
-	<% if session[:user_id].nil? %>
-		<a href="#log_on" class="bug_button fancybox"></a>
-	<% else %>
-		<a href="#buger" class="bug_button fancybox"></a>
-	<% end %>				
-	<% if session[:user_id].nil? %>
-		<a href="#log_on" class="right white fancybox js-login-button">Войти на сайт</a>
-	<% else %>
-		<a href="/logout" class="right white">Выйти</a>
-		<a href="/profile/<%= session[:user_id] %>" class="right mr10 yell active">Мой кабинет</a>
-	<% end %>
-	<div class="clear"></div>
-
-	<div class="top_nav add_err">
-		<a href="/about" class="link1"></a>
-		<a href="/#" class="link2 no_active js-not-implemented" data-left="80px" data-top="-40px"></a>
-		<a href="/galaktidi" class="link3"></a>
-		<a href="/#" class="link4 no_active js-not-implemented" data-left="380px" data-top="-40px"></a>
-		<% if session[:user_id].nil? %>
-			<a href="#log_on" class="link5 fancybox js-play-button"></a>
-		<% else %>
-			<a href="#game" class="link5 fancybox js-play-button" id="gameLink"></a>
-		<% end %>
+<div id="header">
+  <%= link_to image_tag('logo.png'), root_path, id: :logo %>
+  
+  <div id='menu_up'>
+    <%= render 'vk_like' if Rails.env.production? %>
+    <%= link_to '', root_path, id: :bug_report %>
+	  
+    <% if current_user %>
+      <%= link_to 'Выйти',       root_path, id: :logout %>
+      <%= link_to 'Мой кабинет', root_path, id: :my_room %>
+  	<% else %>
+      <%= link_to 'Войти на сайт', root_path, id: :login %>
+    <% end %>
+  </div>
+  
+	<ul id='menu'>
+    <li><%= link_to '', root_path, id: :about_game %></li>
+    <li><%= link_to '', root_path, id: :agent_honor %></li>
+    <li><%= link_to '', root_path, id: :galacties %></li>
+    <li><%= link_to '', root_path, id: :help %></li>
+    <% if current_user %>
+      <li><%= link_to 'Выйти', root_path, id: :logout %></li>
+  	<% else %>
+      <li><%= link_to 'Войти на сайт', root_path, id: :login %></li>
+    <% end %>
+  </ul>
 </div>

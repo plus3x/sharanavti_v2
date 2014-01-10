@@ -1,20 +1,15 @@
-<!-- footer -->
-<div class="footer">
-	<div class="center w960">
-		<div class="bott_back">
-			<div class="bot_nav">
-				<a href="/parents#securityTab" class="blue js-hashchange">Защищенность</a>
-				<a href="/parents#securityRulesTab" class="blue js-hashchange">Безопасность</a>
-				<a href="/oferta">Оферта</a>
-				<a href="/useragreement">Соглашение о пользовании</a>
-				<a href="#" class="js-not-implemented" data-left="460px" data-top="-40px">О компании</a>
-				<a href="/contacts">Контакты</a>
-			</div>
-			<a href="http://vk.com/sharanavti" class="bott_vk blue">Наша группа ВКонтакте</a>
-		</div>
-		<div class="copy">
-			© 2013 Шаранавты <br/>
-			© 2008-2013 Новые Медиа
-		</div>
+<div id='footer'>
+	<ul id='footer_menu'>
+    <li><%= link_to 'Защищённость',             root_path, id: :protection    %></li>
+    <li><%= link_to 'Безопасность',             root_path, id: :security      %></li>
+    <li><%= link_to 'Оферта',                   root_path, id: :offer         %></li>
+    <li><%= link_to 'Соглашение о пользовании', root_path, id: :useragreement %></li>
+    <li><%= link_to 'О компании',               root_path, id: :about_company %></li>
+    <li><%= link_to 'Контакты',                 root_path, id: :contacts      %></li>
+    <li><%= link_to 'Наша группа ВКонтакте', 'http://vk.com/sharanavti', id: :vk_group %></li>
+	</ul>
+	<div id='copyright'>
+		© 2013 Шаранавты <br/>
+		© 2008-2013 Новые Медиа
 	</div>
 </div>

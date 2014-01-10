@@ -9,12 +9,12 @@
 </head>
 <body>
   <div id='main'>
-    <%= render "header" %>
+    <%= render 'header' %>
 
 	  <%= yield %>
 
-	  <%= render "footer" %>
+	  <%= render 'footer' %>
   </div>
-  <%= render "analytics" %>
+  <%= render :analytics if Rails.env.production? %>
 </body>
 </html>
