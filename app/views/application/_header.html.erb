@@ -14,10 +14,10 @@
   </div>
   
 	<ul id='menu'>
-    <li><%= link_to '', root_path, id: :about_game %></li>
-    <li><%= link_to '', root_path, id: :agent_honor %></li>
-    <li><%= link_to '', root_path, id: :galacties %></li>
-    <li><%= link_to '', root_path, id: :help %></li>
+    <li><%= link_to '', about_game_path, id: :about_game %></li>
+    <li><%= link_to '',       root_path, id: :agent_honor %></li>
+    <li><%= link_to '',       root_path, id: :galacties %></li>
+    <li><%= link_to '',       root_path, id: :help %></li>
     <% if current_user %>
       <li><%= link_to 'Выйти', root_path, id: :logout %></li>
   	<% else %>
