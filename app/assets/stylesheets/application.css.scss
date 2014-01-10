@@ -95,6 +95,28 @@ body {
               background-position: -465px -62px;
             }
           }
+          #login {
+            display: block;
+            width: 120px;
+            height: 58px;
+            background-image: image_url('main_menu_buttons.png');
+            background-repeat: no-repeat;
+            background-position: -585px -2px;
+            &:hover {
+              background-position: -585px -62px;
+            }
+          }
+          #logout {
+            display: block;
+            width: 120px;
+            height: 58px;
+            background-image: image_url('main_menu_buttons.png');
+            background-repeat: no-repeat;
+            background-position: -585px -2px;
+            &:hover {
+              background-position: -585px -62px;
+            }
+          }
         }
       }
     }
