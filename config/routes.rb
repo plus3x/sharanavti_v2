@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   get 'about_game' => 'about_game#index'
   
   resources :posts
+  
+  controller :sessions do
+    get    'login'  => :new
+    post   'login'  => :create
+    delete 'logout' => :destroy
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

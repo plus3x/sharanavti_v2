@@ -6,10 +6,10 @@
     <%= link_to '', root_path, id: :bug_report %>
 	  
     <% if current_user %>
-      <%= link_to 'Выйти',       root_path, id: :logout %>
+      <%= link_to 'Выйти',     logout_path, id: :logout %>
       <%= link_to 'Мой кабинет', root_path, id: :my_room %>
   	<% else %>
-      <%= link_to 'Войти на сайт', root_path, id: :login %>
+      <%= link_to 'Войти на сайт', login_path, id: :login %>
     <% end %>
   </div>
   
@@ -19,9 +19,9 @@
     <li><%= link_to '',       root_path, id: :galacties %></li>
     <li><%= link_to '',       root_path, id: :help %></li>
     <% if current_user %>
-      <li><%= link_to 'Выйти', root_path, id: :logout %></li>
+      <li><%= link_to 'Выйти', logout_path, id: :logout %></li>
   	<% else %>
-      <li><%= link_to '', root_path, id: :login %></li>
+      <li><%= link_to '', login_path, id: :login %></li>
     <% end %>
   </ul>
 </div>
