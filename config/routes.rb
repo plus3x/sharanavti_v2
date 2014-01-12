@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   get 'about_game' => 'about_game#index'
-  
+  get 'security'   =>   'security#index'
+
   resources :posts
   
   controller :sessions do
