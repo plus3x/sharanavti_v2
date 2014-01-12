@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get 'about_game' => 'about_game#index'
   get 'security'   =>   'security#index'
+  get 'protection' => 'protection#index'
 
   resources :posts
   
