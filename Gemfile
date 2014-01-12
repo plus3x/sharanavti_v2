@@ -9,6 +9,9 @@ gem 'sqlite3', group: [:development, :test]
 # Use postgresql database
 gem 'pg', group: :production
 
+# Use HAML for templates
+gem 'haml'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
