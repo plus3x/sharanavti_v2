@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get "about_company/index"
+
   root to: 'home#index'
 
   get 'about_game'     =>     'about_game#index'
@@ -7,6 +9,7 @@ Rails.application.routes.draw do
   get 'protection'     =>     'protection#index'
   get 'offer'          =>          'offer#index'
   get 'user_agreement' => 'user_agreement#index'
+  get 'about_company'  =>  'about_company#index'
 
   resources :posts
   
