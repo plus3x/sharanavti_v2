@@ -2,10 +2,11 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  get 'about_game' => 'about_game#index'
-  get 'security'   =>   'security#index'
-  get 'protection' => 'protection#index'
-  get 'offer'      =>      'offer#index'
+  get 'about_game'     =>     'about_game#index'
+  get 'security'       =>       'security#index'
+  get 'protection'     =>     'protection#index'
+  get 'offer'          =>          'offer#index'
+  get 'user_agreement' => 'user_agreement#index'
 
   resources :posts
   
