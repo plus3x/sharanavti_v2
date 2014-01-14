@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :yandex_moneys
+
   root to: 'home#index'
 
   get 'about_game'     =>     'about_game#index'

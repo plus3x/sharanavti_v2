@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @yandex_money.user %>
+</p>
+
+<p>
+  <strong>Customerid:</strong>
+  <%= @yandex_money.customerid %>
+</p>
+
+<p>
+  <strong>Sum:</strong>
+  <%= @yandex_money.sum %>
+</p>
+
+<p>
+  <strong>Gems:</strong>
+  <%= @yandex_money.gems %>
+</p>
+
+<p>
+  <strong>Invoiceid:</strong>
+  <%= @yandex_money.invoiceid %>
+</p>
+
+<%= link_to 'Edit', edit_yandex_money_path(@yandex_money) %> |
+<%= link_to 'Back', yandex_moneys_path %>

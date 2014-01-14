@@ -1,0 +1,37 @@
+<%= form_for(@yandex_money) do |f| %>
+  <% if @yandex_money.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@yandex_money.errors.count, "error") %> prohibited this yandex_money from being saved:</h2>
+
+      <ul>
+      <% @yandex_money.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :customerid %><br>
+    <%= f.number_field :customerid %>
+  </div>
+  <div class="field">
+    <%= f.label :sum %><br>
+    <%= f.number_field :sum %>
+  </div>
+  <div class="field">
+    <%= f.label :gems %><br>
+    <%= f.number_field :gems %>
+  </div>
+  <div class="field">
+    <%= f.label :invoiceid %><br>
+    <%= f.number_field :invoiceid %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  customerid: 1
+  sum: 1
+  gems: 1
+  invoiceid: 1
+
+two:
+  user_id: 
+  customerid: 1
+  sum: 1
+  gems: 1
+  invoiceid: 1
