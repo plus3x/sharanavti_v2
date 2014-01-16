@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140114092623) do
+ActiveRecord::Schema.define(version: 20140116082847) do
 
   create_table "posts", force: true do |t|
     t.string   "name"
@@ -22,15 +22,25 @@ ActiveRecord::Schema.define(version: 20140114092623) do
   end
 
   create_table "yandex_moneys", force: true do |t|
+    t.datetime "requestDatetime"
+    t.string   "action"
+    t.integer  "shopId"
+    t.integer  "shopArticleId"
+    t.string   "invoiceId"
+    t.string   "customerNumber"
+    t.datetime "orderCreatedDatetime"
+    t.float    "orderSumAmount"
+    t.float    "orderSumCurrencyPaycash"
+    t.float    "orderSumBankPaycash"
+    t.float    "shopSumAmount"
+    t.float    "shopSumCurrencyPaycash"
+    t.float    "shopSumBankPaycash"
+    t.datetime "paymentDatetime"
+    t.string   "paymentPayerCode"
     t.integer  "user_id"
-    t.integer  "customerid"
-    t.integer  "sum"
-    t.integer  "gems"
-    t.integer  "invoiceid"
+    t.integer  "gemSum"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "yandex_moneys", ["user_id"], name: "index_yandex_moneys_on_user_id"
 
 end

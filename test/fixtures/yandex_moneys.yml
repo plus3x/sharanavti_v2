@@ -1,15 +1,39 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 
-  customerid: 1
-  sum: 1
-  gems: 1
-  invoiceid: 1
+  requestDatetime: 2014-01-16 12:28:47
+  action: MyString
+  shopId: 1
+  shopArticleId: 1
+  invoiceId: MyString
+  customerNumber: MyString
+  orderCreatedDatetime: 2014-01-16 12:28:47
+  orderSumAmount: 1.5
+  orderSumCurrencyPaycash: 1.5
+  orderSumBankPaycash: 1.5
+  shopSumAmount: 1.5
+  shopSumCurrencyPaycash: 1.5
+  shopSumBankPaycash: 1.5
+  paymentDatetime: 2014-01-16 12:28:47
+  paymentPayerCode: MyString
+  user_id: 1
+  gemSum: 1
 
 two:
-  user_id: 
-  customerid: 1
-  sum: 1
-  gems: 1
-  invoiceid: 1
+  requestDatetime: 2014-01-16 12:28:47
+  action: MyString
+  shopId: 1
+  shopArticleId: 1
+  invoiceId: MyString
+  customerNumber: MyString
+  orderCreatedDatetime: 2014-01-16 12:28:47
+  orderSumAmount: 1.5
+  orderSumCurrencyPaycash: 1.5
+  orderSumBankPaycash: 1.5
+  shopSumAmount: 1.5
+  shopSumCurrencyPaycash: 1.5
+  shopSumBankPaycash: 1.5
+  paymentDatetime: 2014-01-16 12:28:47
+  paymentPayerCode: MyString
+  user_id: 1
+  gemSum: 1
