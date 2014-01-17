@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  
   root to: 'home#index'
 
   get 'about_game'     =>     'about_game#index'
@@ -12,9 +12,9 @@ Rails.application.routes.draw do
 
   resources :posts
 
-  controller :yandex_money do
-    post 'yandex_money/check_order'  => :check_order
-    post 'yandex_money/payment_done' => :payment_done
+  controller :yandex_moneys do
+    post 'yandex_moneys/check_order'  => :check_order
+    post 'yandex_moneys/payment_done' => :payment_done
   end
   
   controller :sessions do
