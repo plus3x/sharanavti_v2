@@ -97,11 +97,13 @@ class YandexMoneysController < ApplicationController
     end
     
     def verification_of_PKCS7
+      enterence_body = request.raw_post
+      
       store = OpenSSL::X509::Store.new
-      cert = OpenSSL::X509::Certificate.new(File.read('lib/certificates/Yandex.Money.crt'))
+      cert  = OpenSSL::X509::Certificate.new(File.read('lib/certificates/Yandex.Money.crt'))
       store.add_cert(cert)
 
-      p7sign = OpenSSL::PKCS7.new(request.raw_post)
+      p7sign = OpenSSL::PKCS7.new(enterence_body)
       unless p7sign.verify(nil, store, nil, OpenSSL::PKCS7::NOVERIFY)
         @error_code = 1
       end

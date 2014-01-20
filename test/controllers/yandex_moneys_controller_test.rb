@@ -16,7 +16,9 @@ class YandexMoneysControllerTest < ActionController::TestCase
   end
   
   test "should check order" do
-    post :check_order, @encrypted_date_of_checkOrder_yandex
+    assert_difference 'YandexMoney.count' do
+      post :check_order, @encrypted_date_of_checkOrder_yandex
+    end
     assert_response :success
   end
 
