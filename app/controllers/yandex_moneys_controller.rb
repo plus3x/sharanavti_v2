@@ -14,8 +14,8 @@ class YandexMoneysController < ApplicationController
   # Yandex.Money send payment done
   # POST /yandex_money/payment_done
   def payment_done
-    @yandex_payment = YandexMoney.find_by_invoiceId(yandex_params[:invoiceId])
-    @yandex_payment.try(:update)
+    @yandex_payment = YandexMoney.find_by(invoiceId: yandex_params[:invoiceId])
+    @yandex_payment.try(:update, yandex_params)
   end
   
   private

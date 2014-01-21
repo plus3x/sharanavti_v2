@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140116082847) do
+ActiveRecord::Schema.define(version: 20140121103512) do
 
   create_table "posts", force: true do |t|
     t.string   "name"
@@ -42,5 +42,7 @@ ActiveRecord::Schema.define(version: 20140116082847) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "yandex_moneys", ["invoiceId"], name: "index_yandex_moneys_on_invoiceId"
 
 end

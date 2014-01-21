@@ -1,22 +1,18 @@
 class YandexMoney < ActiveRecord::Base
   SHOP_ID = 14010
   
-  # for check order
-  before_save do
-    validate :action, inclusion: %w( checkOrderRequest )
-  end
+  # On check order
+  validate :action, equal_to: 'checkOrderRequest', on: :create
   
-  # for payment done
-  before_update do
-    validate :action, inclusion: %w( paymentAvisoRequest )
-    validates_presence_of :paymentDatetime
-  end
-
+  # On payment done
+  validate :action, inclusion: %w( paymentAvisoRequest ), on: :update
+  validates_presence_of :paymentDatetime, on: :update
+  
+  validates_uniqueness_of :invoiceId, on: :create
   validate :shopId, inclusion: [SHOP_ID]
   validates_presence_of :requestDatetime,
     :action,
     :shopId,
-    :shopArticleId,
     :invoiceId,
     :customerNumber,
     :orderCreatedDatetime,
@@ -32,9 +28,5 @@ class YandexMoney < ActiveRecord::Base
   
     def self.shop_id
       SHOP_ID
-    end
-  
-    def self.scid
-      SCID
     end
 end

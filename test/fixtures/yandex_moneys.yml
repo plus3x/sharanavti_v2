@@ -19,21 +19,21 @@ one:
   user_id: 1
   gemSum: 1
 
-two:
-  requestDatetime: 2014-01-16 12:28:47
-  action: MyString
-  shopId: 1
-  shopArticleId: 1
-  invoiceId: MyString
-  customerNumber: MyString
-  orderCreatedDatetime: 2014-01-16 12:28:47
-  orderSumAmount: 1.5
-  orderSumCurrencyPaycash: 1.5
-  orderSumBankPaycash: 1.5
-  shopSumAmount: 1.5
-  shopSumCurrencyPaycash: 1.5
-  shopSumBankPaycash: 1.5
-  paymentDatetime: 2014-01-16 12:28:47
-  paymentPayerCode: MyString
-  user_id: 1
-  gemSum: 1
+# paymentAvisoRequest:
+#   requestDatetime: 2014-01-16 14:22:06
+#   action: paymentAvisoRequest
+#   shopId: 14010
+#   shopArticleId: 1
+#   invoiceId: 2000000102339
+#   customerNumber: 710
+#   orderCreatedDatetime: 2014-01-16 14:21:50
+#   orderSumAmount: 86.0
+#   orderSumCurrencyPaycash: 10643
+#   orderSumBankPaycash: 1003
+#   shopSumAmount: 81.70
+#   shopSumCurrencyPaycash: 10643
+#   shopSumBankPaycash: 1003
+#   paymentDatetime: 2014-01-16 14:22:06
+#   paymentPayerCode: 4100322468557
+#   user_id: nil
+#   gemSum: nil

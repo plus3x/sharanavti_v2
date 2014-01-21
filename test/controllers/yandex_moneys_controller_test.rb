@@ -23,6 +23,19 @@ class YandexMoneysControllerTest < ActionController::TestCase
   end
 
   test "should set payment done" do
+    payment = YandexMoney.create! requestDatetime: "2014-01-16 14:22:06",
+      action: "checkOrderRequest",
+      shopId: "14010",
+      invoiceId: "2000000102339",
+      customerNumber: "710",
+      orderCreatedDatetime: "2014-01-16T14:21:50.805+04:00",
+      orderSumAmount: "86.00",
+      orderSumCurrencyPaycash: "10643",
+      orderSumBankPaycash: "1003",
+      shopSumAmount: "81.70",
+      shopSumCurrencyPaycash: "10643",
+      shopSumBankPaycash: "1003",
+      paymentPayerCode: "4100322468557"
     post :payment_done, @encrypted_date_of_avisoPayment_yandex
     assert_response :success
   end
