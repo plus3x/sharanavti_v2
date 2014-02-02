@@ -2,11 +2,14 @@ class YandexMoney < ActiveRecord::Base
   SHOP_ID = 14010
   
   # On check order
-  validate :action, equal_to: 'checkOrderRequest', on: :create
+  validate :action, inclusion: %w( checkOrderRequest ), on: :create
   
   # On payment done
-  validate :action, inclusion: %w( paymentAvisoRequest ), on: :update
-  validates_presence_of :paymentDatetime, on: :update
+  before_validation do
+    if action == "paymentAvisoRequest" and paymentDatetime.nil?
+      errors.add(:paymentDatetime, "can't be blank!")
+    end
+  end
   
   validates_uniqueness_of :invoiceId, on: :create
   validate :shopId, inclusion: [SHOP_ID]
@@ -28,5 +31,9 @@ class YandexMoney < ActiveRecord::Base
   
     def self.shop_id
       SHOP_ID
+    end
+
+    def self.log
+      @@log ||= Logger.new("#{Rails.root}/log/yandex_money_#{Rails.env}.log")
     end
 end

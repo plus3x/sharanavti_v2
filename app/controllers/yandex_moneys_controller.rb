@@ -1,21 +1,28 @@
 class YandexMoneysController < ApplicationController
+  YANDEX_CERTIFICATE = 'cert/Yandex.Money.crt'
+  
   skip_before_action :authorize
-  before_action :verification_of_PKCS7 if Rails.env.production?
+  before_action :verification_of_PKCS7 if (Rails.env.production? or Rails.env.staging?)
   before_action :decrypt_yandex_enterence_body
   before_action :get_yandex_params_from_enterence_body
+  after_action :logging
   
   # Check user order from Yandex.Money
   # POST /yandex_money/check_order
   def check_order
     @yandex_payment = YandexMoney.new(yandex_params)
-    @yandex_payment.save
+    @error_code = 100 unless @yandex_payment.save
   end
   
   # Yandex.Money send payment done
   # POST /yandex_money/payment_done
   def payment_done
     @yandex_payment = YandexMoney.find_by(invoiceId: yandex_params[:invoiceId])
-    @yandex_payment.try(:update, yandex_params)
+    if @yandex_payment.update yandex_params
+      add_gems_to_user
+    else
+      @error_code = 100
+    end
   end
   
   private
@@ -42,6 +49,19 @@ class YandexMoneysController < ApplicationController
     end
     
   protected
+  
+    def add_gems_to_user
+      unless @error_code or @yandex_payment.valid?
+        begin
+          result = api_call("/api/user.gems.add?user_id=" + URI::encode(yandex_params[:user_id]) + "&count=" + URI::encode(yandex_params[:gemSum]))
+          if result["error"]
+            YandexMoney.log.error "Game server error: #{@error_code}. Invoice id: #{@yandex_payment.invoiceId}"
+          end
+        rescue
+          YandexMoney.log.error "Game server error: API not work. Invoice id: #{@yandex_payment.invoiceId}"
+        end
+      end
+    end
 
     def decrypt_yandex_enterence_body
       if request.raw_post
@@ -100,12 +120,21 @@ class YandexMoneysController < ApplicationController
       enterence_body = request.raw_post
       
       store = OpenSSL::X509::Store.new
-      cert  = OpenSSL::X509::Certificate.new(File.read('lib/certificates/Yandex.Money.crt'))
+      cert  = OpenSSL::X509::Certificate.new(File.read(YANDEX_CERTIFICATE))
       store.add_cert(cert)
 
       p7sign = OpenSSL::PKCS7.new(enterence_body)
       unless p7sign.verify(nil, store, nil, OpenSSL::PKCS7::NOVERIFY)
         @error_code = 1
+        YandexMoney.log.error "Verification error. Error: #{@error_code}. Action: #{@yandex_params.action}. Model error: #{@yandex_payment.errors.full_messages.join(', ')}. Invoice id: #{@yandex_payment.invoiceId}"
+      end
+    end
+
+    def logging
+      if @error_code or @yandex_payment.invalid?
+        YandexMoney.log.error "Error: #{@error_code}. Action: #{@yandex_params.action}. Model error: #{@yandex_payment.errors.full_messages.join(', ')}. Invoice id: #{@yandex_payment.invoiceId}"
+      else
+        YandexMoney.log.info "Invoice id: #{@yandex_payment.invoiceId} - success"
       end
     end
 end
