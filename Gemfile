@@ -7,9 +7,6 @@ gem 'rails', '4.1.0.beta1'
 # For working with API
 gem 'activeresource'
 
-# For working with API
-gem 'httparty'
-
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', group: [:development, :test]
 
