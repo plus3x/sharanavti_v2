@@ -1,27 +1,22 @@
-<div id="header">
-  <%= link_to image_tag('logo.png'), root_path, id: :logo %>
-  
-  <div id='menu_up'>
-    <%= render 'vk_like' if Rails.env.production? %>
-    <%= link_to '', root_path, id: :bug_report %>
+#header
+  = link_to image_tag('logo.png'), root_path, id: :logo
+
+  #menu_up
+    = render 'vk_like' if Rails.env.production?
+    = link_to '', root_path, id: :bug_report
 	  
-    <% if current_user %>
-      <%= link_to 'Выйти',     logout_path, id: :logout %>
-      <%= link_to 'Мой кабинет', root_path, id: :my_room %>
-  	<% else %>
-      <%= link_to 'Войти на сайт', login_path, id: :login %>
-    <% end %>
-  </div>
-  
-	<ul id='menu'>
-    <li><%= link_to '', about_game_path, id: :about_game %></li>
-    <li><%= link_to '',       root_path, id: :agent_honor %></li>
-    <li><%= link_to '',       root_path, id: :galacties %></li>
-    <li><%= link_to '',       root_path, id: :help %></li>
-    <% if current_user %>
-      <li><%= link_to 'Выйти', logout_path, id: :logout %></li>
-  	<% else %>
-      <li><%= link_to '', login_path, id: :login %></li>
-    <% end %>
-  </ul>
-</div>
+    - if current_user
+      = link_to 'Выйти',     logout_path, id: :logout
+      = link_to 'Мой кабинет', root_path, id: :my_room
+  	- else
+      = link_to 'Войти на сайт', login_path, id: :login
+
+	%ul#menu
+    %li= link_to '', about_game_path, id: :about_game
+    %li= link_to '',       root_path, id: :agent_honor
+    %li= link_to '',       root_path, id: :galacties
+    %li= link_to '',       root_path, id: :help
+    - if current_user
+      %li= link_to 'Выйти', logout_path, id: :logout
+  	- else
+      %li= link_to '', login_path, id: :login

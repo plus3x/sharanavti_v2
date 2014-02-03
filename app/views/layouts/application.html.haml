@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title= @head_title || 'Шаранавты. Герои космоса'
+    = favicon_link_tag
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+%body
+  #main
+    = render 'header'
+
+    = yield
+
+    = render 'footer'
+  = render 'google_analytics' if Rails.env.production?
+
+  #copyright
+    Copyright by &copy; 2014 NewMedia
