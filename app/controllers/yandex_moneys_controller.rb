@@ -11,18 +11,15 @@ class YandexMoneysController < ApplicationController
   # POST /yandex_money/check_order
   def check_order
     @yandex_payment = YandexMoney.new(yandex_params)
-    @error_code = 100 unless @yandex_payment.save
+    @yandex_payment.save unless @error_code
   end
   
   # Yandex.Money send payment done
   # POST /yandex_money/payment_done
   def payment_done
     @yandex_payment = YandexMoney.find_by(invoiceId: yandex_params[:invoiceId])
-    if @yandex_payment.update yandex_params
-      add_gems_to_user
-    else
-      @error_code = 100
-    end
+    @yandex_payment.try(:update, yandex_params)
+    add_gems_to_user unless @error_code or @yandex_payment.invalid?
   end
   
   private
@@ -43,24 +40,20 @@ class YandexMoneysController < ApplicationController
         :shopSumCurrencyPaycash,
         :shopSumBankPaycash,
         :paymentDatetime,
-        :paymentPayerCode,
-        :user_id,
-        :gemSum)
+        :paymentPayerCode)
+      rescue
+        nil
     end
     
   protected
   
     def add_gems_to_user
-      unless @error_code or @yandex_payment.valid?
-        begin
-          result = api_call("/api/user.gems.add?user_id=" + URI::encode(yandex_params[:user_id]) + "&count=" + URI::encode(yandex_params[:gemSum]))
-          if result["error"]
-            YandexMoney.log.error "Game server error: #{@error_code}. Invoice id: #{@yandex_payment.invoiceId}"
-          end
-        rescue
-          YandexMoney.log.error "Game server error: API not work. Invoice id: #{@yandex_payment.invoiceId}"
-        end
-      end
+        gems = PaymentService.find_by(cost: yandex_params[:orderSumAmount]).count
+        api_query = "/api/user.gems.add?" + {user_id: yandex_params[:customerNumber], count: gems}.to_param
+        result = api_call api_query
+        YandexMoney.log.error("API CALL: #{ api_query }.\nResponse error: #{result["error"]}.\nYandex params: #{yandex_params}.") if result["error"]
+      rescue
+        YandexMoney.log.error("API CALL: #{ api_query }.\nAPI not found.\nYandex params: #{yandex_params}.")
     end
 
     def decrypt_yandex_enterence_body
@@ -90,9 +83,11 @@ class YandexMoneysController < ApplicationController
     end
 
     def get_yandex_params_from_enterence_body
-      hash = Hash.from_xml(@enterence_xml)
-      action_name = hash.keys.first
-      begin
+        YandexMoney.log.info "XML from yandex:\n#{@enterence_xml}"
+
+        hash = Hash.from_xml(@enterence_xml)
+        action_name = hash.keys.first
+
         params[:yandex] = {
               requestDatetime:         hash[action_name]['requestDatetime'],
               action:                  action_name,
@@ -107,13 +102,11 @@ class YandexMoneysController < ApplicationController
               shopSumCurrencyPaycash:  hash[action_name]['shopSumCurrencyPaycash'],
               shopSumBankPaycash:      hash[action_name]['shopSumBankPaycash'],
               paymentDatetime:        (hash[action_name]['paymentDatetime'] rescue nil),
-              paymentPayerCode:        hash[action_name]['paymentPayerCode'],
-              user_id:                (hash[action_name]['user_id'] rescue nil),
-              gemSum:                 (hash[action_name]['gemSum'] rescue nil)
+              paymentPayerCode:        hash[action_name]['paymentPayerCode']
         }
+        YandexMoney.log.info "Yandex params:\n#{yandex_params}"
       rescue
         @error_code = 200
-      end
     end
     
     def verification_of_PKCS7
@@ -126,13 +119,13 @@ class YandexMoneysController < ApplicationController
       p7sign = OpenSSL::PKCS7.new(enterence_body)
       unless p7sign.verify(nil, store, nil, OpenSSL::PKCS7::NOVERIFY)
         @error_code = 1
-        YandexMoney.log.error "Verification error. Error: #{@error_code}. Action: #{@yandex_params.action}. Model error: #{@yandex_payment.errors.full_messages.join(', ')}. Invoice id: #{@yandex_payment.invoiceId}"
+        YandexMoney.log.error "Verification error. Error code: #{@error_code}. Action: #{@yandex_params.action}. Model error: #{@yandex_payment.errors.full_messages.join(', ')}. Invoice id: #{@yandex_payment.invoiceId}"
       end
     end
 
     def logging
       if @error_code or @yandex_payment.invalid?
-        YandexMoney.log.error "Error: #{@error_code}. Action: #{@yandex_params.action}. Model error: #{@yandex_payment.errors.full_messages.join(', ')}. Invoice id: #{@yandex_payment.invoiceId}"
+        YandexMoney.log.error "Error code: #{@error_code}. Action: #{@yandex_payment.action}. Model error: #{@yandex_payment.errors.full_messages.join(', ')}. Invoice id: #{@yandex_payment.invoiceId}"
       else
         YandexMoney.log.info "Invoice id: #{@yandex_payment.invoiceId} - success"
       end
