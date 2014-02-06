@@ -1,14 +1,23 @@
 Rails.application.routes.draw do
-  
   root to: 'home#index'
+  
+  controller :static_pages do
+    get 'about_game',     to: :about_game
+    get 'about_company',  to: :about_company
+    get 'contacts',       to: :contacts
+    get 'offer',          to: :offer
+    get 'protection',     to: :protection
+    get 'security',       to: :security
+    get 'user_agreement', to: :user_agreement
+  end
 
-  get 'about_game'     =>     'about_game#index'
-  get 'security'       =>       'security#index'
-  get 'protection'     =>     'protection#index'
-  get 'offer'          =>          'offer#index'
-  get 'user_agreement' => 'user_agreement#index'
-  get 'about_company'  =>  'about_company#index'
-  get 'contacts'       =>       'contacts#index'
+  #get 'about_game'     =>     'about_game#index'
+  #get 'security'       =>       'security#index'
+  #get 'protection'     =>     'protection#index'
+  #get 'offer'          =>          'offer#index'
+  #get 'user_agreement' => 'user_agreement#index'
+  #get 'about_company'  =>  'about_company#index'
+  #get 'contacts'       =>       'contacts#index'
 
   resources :posts
 
