@@ -1,0 +1,6 @@
+#about_game.round_border
+  %h1 Об игре
+  %p Список постов
+  - cache @posts do
+    %ul#posts
+      = render @posts
